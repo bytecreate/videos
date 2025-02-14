@@ -1,0 +1,14 @@
+# Docker-Compose Installation
+sudo apt-get install docker-compose-plugin
+
+# Beszel Docker-Compose Stack
+version: '3'
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    ports:
+      - 8090:8090
+    volumes:
+      - ./beszel_data:/beszel_data
