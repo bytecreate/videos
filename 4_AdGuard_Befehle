@@ -1,1 +1,29 @@
+# AdGuard Docker-Compose
+version: "3.8"
+services:
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"      # optional, nur wenn DHCP genutzt wird
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "3000:3000/tcp"  # Setup‑Wizard beim ersten Start
+    volumes:
+      - ./adguard/conf:/opt/adguardhome/conf
+      - ./adguard/work:/opt/adguardhome/work
 
+# Linux Listen Ports anzeigen
+netstat -tulpen
+
+# Linux DNS Dienst checken
+systemctl status systemd-resolved
+
+# Linux DNS Dienst stoppen
+systemctl stop systemd-resolved
+
+# Linux DNS Dienst aus dem Autostart entfernen (nicht im Video gezeigt)
+systemctl disable systemd-resolved
